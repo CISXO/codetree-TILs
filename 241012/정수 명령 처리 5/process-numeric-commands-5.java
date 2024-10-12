@@ -1,52 +1,51 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.Stack;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
 
-        int n = sc.nextInt();
-        sc.nextLine();  // 개행 문자 제거
-
-        Stack<Integer> stack = new Stack<>();
-        ArrayList<String> stAL = new ArrayList<>();
-        stAL.add("push_back");
-        stAL.add("pop_back");
-        stAL.add("size");
-        stAL.add("get");
-
+        BufferedReader br
+                = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(br.readLine());
+        ArrayList<Integer> stack = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            String str = sc.nextLine();
-            String[] stChange = str.split("\\s");
-
-            if (stChange.length > 1) {
-                int k = Integer.parseInt(stChange[1]);
-
-                if (stChange[0].equals("push_back")) {  // push_back 비교
-                    stack.push(k);
-                } else if (stChange[0].equals("get")) {  // get 명령 처리
-                    if (!stack.isEmpty()) {
-                        System.out.println(stack.elementAt(k-1));
-                    } else {
-                        System.out.println("Stack is empty");
-                    }
-                } else {
-                    System.out.println("input error");
-                }
-            } else {
-                if (stChange[0].equals("pop_back")) {  // pop_back 비교
-                    if (!stack.isEmpty()) {
-                        stack.pop();
-                    } else {
-                        System.out.println("Stack is empty");
-                    }
-                } else if (stChange[0].equals("size")) {  // size 명령 처리
-                    System.out.println(stack.size());
-                } else {
-                    System.out.println("input error");
-                }
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            String data = st.nextToken();
+            Integer k = null;
+            if (st.hasMoreTokens()) {
+                k = Integer.parseInt(st.nextToken());
+            }
+            if(data.equals("push_back")) {
+                pushback(stack, k);
+            } else if (data.equals("get")) {
+                stackget(stack, k);
+            } else if (data.equals("size")) {
+                stack_size(stack);
+            } else if (data.equals("pop_back")) {
+                stack_pop(stack);
             }
         }
     }
-}
+
+    private static void stack_pop(ArrayList<Integer> stack) {
+        stack.remove(stack.size()-1);
+    }
+
+    private static void stack_size(ArrayList<Integer> stack) {
+        System.out.println(stack.size());
+    }
+
+    private static void stackget(ArrayList<Integer> stack, Integer k) {
+        if (k != null) {
+            System.out.println(stack.get(k-1));
+        } else {
+            System.out.println("잘못된 인덱스 또는 k는 null입니다.");
+        }
+    }
+
+    private static void pushback(ArrayList<Integer> stack, Integer k) {
+        stack.add(k);
+    }
