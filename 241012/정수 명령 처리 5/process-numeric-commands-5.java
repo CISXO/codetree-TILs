@@ -49,3 +49,4 @@ public class Main {
     private static void pushback(ArrayList<Integer> stack, Integer k) {
         stack.add(k);
     }
+}
