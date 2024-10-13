@@ -41,7 +41,7 @@ public class Main {
             }
         }
 
-        // 각 특징 그룹을 사전순으로 정렬하여 조합 생성에 사용
+        // 각 특징 그룹을 사전순으로 정렬
         ArrayList<ArrayList<String>> sortedFeatures = new ArrayList<>();
         for (int i = 0; i < tokenCount; i++) {
             ArrayList<String> sortedList = new ArrayList<>(featureSet.get(i));
@@ -49,42 +49,53 @@ public class Main {
             sortedFeatures.add(sortedList);
         }
 
-        // 빠른 조합 찾기
-        String result = findTthCombination(sortedFeatures, impossibleSet, T);
+        // 전체 가능한 조합의 수 계산
+        long totalCombinations = 1;
+        for (ArrayList<String> featureList : sortedFeatures) {
+            totalCombinations *= featureList.size();
+        }
+
+        // T번째 조합을 몫과 나머지 방식으로 계산
+        String result = calculateTthCombination(sortedFeatures, impossibleSet, T - 1, totalCombinations);
         System.out.println(result);
     }
 
-    // 가능한 조합 중 T번째 조합을 빠르게 찾는 메서드
-    private static String findTthCombination(ArrayList<ArrayList<String>> sortedFeatures, HashSet<String> impossibleSet, long T) {
+    private static String calculateTthCombination(ArrayList<ArrayList<String>> sortedFeatures, HashSet<String> impossibleSet, long T, long totalCombinations) {
         ArrayList<String> currentCombination = new ArrayList<>();
-        int[] indices = new int[sortedFeatures.size()];
-        long totalCombinations = 0;
+        long remainingT = T;
 
-        while (true) {
-            currentCombination.clear();
-            for (int i = 0; i < sortedFeatures.size(); i++) {
-                currentCombination.add(sortedFeatures.get(i).get(indices[i]));
-            }
-
-            String combination = String.join(" ", currentCombination);
-
-            // 불가능한 조합이 아니면 카운트 증가
-            if (!impossibleSet.contains(combination)) {
-                totalCombinations++;
-                if (totalCombinations == T) {
-                    return combination;
-                }
-            }
-
-            // 조합을 사전순으로 넘김
-            for (int i = sortedFeatures.size() - 1; i >= 0; i--) {
-                if (indices[i] < sortedFeatures.get(i).size() - 1) {
-                    indices[i]++;
-                    break;
-                } else {
-                    indices[i] = 0;
-                }
-            }
+        for (ArrayList<String> featureList : sortedFeatures) {
+            totalCombinations /= featureList.size(); // 현재 특징의 크기를 나눠줌
+            int index = (int) (remainingT / totalCombinations); // 몫을 통해 선택할 인덱스 결정
+            currentCombination.add(featureList.get(index)); // 해당 특징 선택
+            remainingT %= totalCombinations; // 나머지를 계산하여 다음 특징으로 넘어감
         }
+
+        // 최종적으로 생성된 조합을 검증 (불가능한 조합이면 건너뜀)
+        String combination = String.join(" ", currentCombination);
+        if (impossibleSet.contains(combination)) {
+            // 불가능한 조합일 경우에는 스킵하고 다음 조합을 처리할 필요가 있음
+            return calculateTthCombination(sortedFeatures, impossibleSet, T + 1, totalCombinations);
+        }
+
+        return combination;
     }
 }
+
+
+/*
+정렬된 데이타 셋 [] , [], []
+r * s * t
+s *
+전체 개수를 구하고
+hashset 개수에서  s1, s2, s3, s4 ...
+        s1* s2 * s3* s4 * ...Total value
+        value1 = T / ((Total value)/s1) = 몫 / 나머지1  ->
+        value2 = 나머지1 / ((Total value)/(s1*s2)) = 몫 .. 나머지2
+        ...
+        valuen = 나머지n-1 / ((Total value)/(s1*s2* ...sn)) = 나머지
+        value1 몫 set1에서 선택 , value2 .. value n ..
+        그거 조합한게 답
+
+ */
+//
