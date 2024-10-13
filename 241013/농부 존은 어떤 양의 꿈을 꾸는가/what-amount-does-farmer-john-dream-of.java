@@ -82,7 +82,6 @@ public class Main {
     }
 }
 
-
 /*
 정렬된 데이타 셋 [] , [], []
 r * s * t
