@@ -52,9 +52,6 @@ public class Main {
             totalCombinations *= featureList.size();
         }
 
-        System.out.println(impossibleSet);
-        System.out.println(sortedFeatures);
-
         List<Integer> covDataList = new ArrayList<>(); // cov_data를 저장할 리스트
 
         for (String rm_data : impossibleSet) {
@@ -73,7 +70,6 @@ public class Main {
                     List<String> featureList = sortedFeatures.get(i);
                     int index = featureList.indexOf(token);
                     if (index != -1) {
-                        System.out.println("Token: " + token + " | Feature index: " + i + " | Position: " + index);
                         indices.set(i, index); // 각 feature의 인덱스를 List에 저장
                     }
                 }
