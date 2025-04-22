@@ -10,12 +10,12 @@ public class Main {
         int hour = day*24 + B -11;
         int minute = hour * 60 + C - 11;
 
-        if(minute>0) {
+        if(minute>=0) {
 
-        System.out.println(minute);
+            System.out.println(minute);
         } else {
 
-        System.out.println(-1);
+            System.out.println(-1);
         }
     }
 }
