@@ -37,40 +37,28 @@ public class Main {
             max = Math.max(max, depth);
             // Please write your code here.
         }
-        int nextData = 0;
-        for(int i=0; i<max -1; i++) {
-            Character cuA = queueA.poll();
-            Character cuB = queueB.poll();
+        int prevA = 0;
+        int prevB = 0;
 
-            if(cuA == null) {
-                cuA='T';
-            }
-            if(cuB==null) {
-                cuB='T';
-            }
+        for (int i = 0; i < max; i++) {
+            char cuA = queueA.isEmpty() ? 'T' : queueA.poll();
+            char cuB = queueB.isEmpty() ? 'T' : queueB.poll();
 
-            if(cuA == 'L') {
-                currentA--;
-            } else if (cuA =='R') {
-                currentA++;
-            }
+            // 위치 업데이트 전 상태 저장
+            prevA = currentA;
+            prevB = currentB;
 
-            if(cuB == 'L') {
-                currentB--;
-            } else if (cuB=='R') {
-                currentB++;
-            }
+            // 이동
+            if (cuA == 'L') currentA--;
+            else if (cuA == 'R') currentA++;
 
-            if(currentA==currentB&&nextData==1) {
-            
-                nextData = 1;
-            } else if(currentA==currentB&&nextData==0) {
+            if (cuB == 'L') currentB--;
+            else if (cuB == 'R') currentB++;
+
+            // 충돌 조건: 직전엔 다르고, 지금은 같을 때
+            if (prevA != prevB && currentA == currentB) {
                 totalResult++;
-                nextData=1;
-            } else {
-                nextData = 0;
             }
-
         }
         // Please write your code here.
         System.out.println(totalResult);
