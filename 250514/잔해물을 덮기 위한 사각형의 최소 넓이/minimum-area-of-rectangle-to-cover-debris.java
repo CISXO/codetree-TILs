@@ -67,6 +67,7 @@ public class Main {
                 }
             }
         }
+
         int[] minPair = new int[2];
         int[] maxPair = new int[2];
         int count = 0;
@@ -93,7 +94,7 @@ public class Main {
         
         int resultData = ddxt * ddyt;
         
-        if(count==resultData) {
+        if(count==resultData || count==0) {
             return 1;
         } else {
             return 0;
@@ -104,7 +105,7 @@ public class Main {
     public static void calculate(int point) {
 
         if(point == 1) {
-
+            
             for(int i=0; i<max; i++) {
                 for(int j=0; j<max; j++) {
                     if(visited[i][j] == point) {
@@ -113,6 +114,7 @@ public class Main {
                 }
             }
         } else if(point == 0) {
+            
             for(int i=0; i<max; i++) {
                 for(int j=0; j<max; j++) {
                     if(visited[i][j] > 0) {
