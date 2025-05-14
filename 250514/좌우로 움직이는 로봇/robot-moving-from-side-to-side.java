@@ -42,8 +42,11 @@ public class Main {
             Character cuA = queueA.poll();
             Character cuB = queueB.poll();
 
-            if(cuA == null || cuB == null) {
-                break;
+            if(cuA == null) {
+                cuA='T';
+            }
+            if(cuB==null) {
+                cuB='T';
             }
 
             if(cuA == 'L') {
@@ -58,9 +61,12 @@ public class Main {
                 currentB++;
             }
 
-            if(currentA==currentB&&nextData==0) {
-                totalResult++;
+            if(currentA==currentB&&nextData==1) {
+            
                 nextData = 1;
+            } else if(currentA==currentB&&nextData==0) {
+                totalResult++;
+                nextData=1;
             } else {
                 nextData = 0;
             }
