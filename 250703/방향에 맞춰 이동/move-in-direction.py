@@ -1,11 +1,3 @@
-n = int(input())
-moves = [tuple(input().split()) for _ in range(n)]
-dir = [move[0] for move in moves]
-dist = [int(move[1]) for move in moves]
-
-# Please write your code here
-
-#변수정의(위치,dx,dy,x,y)
 
 x,y=0,0
 
