@@ -15,14 +15,14 @@ for _ in range(n):
     dir,iter=tuple(input().split())
     iter=int(iter)
 
-    if(dir=='W'):  
+    if(dir=='E'):  
+        dirnum=0
+    elif(dir=='W'):
         dirnum=1
     elif(dir=='S'):
         dirnum=2
-    elif(dir=='N'):
-        dirnum=3
     else:
-        dirnum=4
+        dirnum=3
 
     x+=dx[dirnum]*iter
     y+=dy[dirnum]*iter
