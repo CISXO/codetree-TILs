@@ -1,17 +1,21 @@
-K, N = map(int, input().split())
-if not (1 < K < 5) or not (1 < N < 5):
-    print("K와 N은 1보다 크고 5보다 작은 값을 입력해야 합니다.")
-    exit()
+k, n = map(int, input().split())
+
 answer = []
+def print_answer():
+    for elem in answer:
+        print(elem, end=" ")
+    print()
 
 def choose(curr_num):
-    if curr_num == N:
-        print(*answer)
+    if curr_num == n + 1:
+        print_answer()
         return
 
-    for select in range(1,K+1):
-        answer.append(select)
+    for i in range(1, k + 1):
+        answer.append(i)
         choose(curr_num + 1)
         answer.pop()
 
-choose(0)
+    return
+
+choose(1)
